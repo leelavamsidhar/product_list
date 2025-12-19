@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:products_list/Presentation/Screens/payment_screen.dart';
 
 import '../../data/Models/products_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,6 +46,7 @@ class _OrderScreenState extends State<OrderScreen> {
       ),
 
     );
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => PaymentScreen(),));
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
@@ -116,7 +118,7 @@ class _OrderScreenState extends State<OrderScreen> {
     var options = {
 
       'key': 'rzp_test_RswPiyx1RQgabT',
-      'amount': finalAmount, // 500.00 INR
+      'amount': finalAmount.toInt(), // 500.00 INR
       'currency': 'INR',
       'name': name,
       'description': 'Fine T-Shirt',
