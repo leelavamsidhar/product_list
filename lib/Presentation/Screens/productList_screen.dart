@@ -19,6 +19,7 @@ class ProductlistScreen extends StatefulWidget {
 }
 
 class _ProductlistScreenState extends State<ProductlistScreen> {
+  bool view = false;
   @override
   void initState() {
     context.read<ProductsListBloc>().add(GetProductList());
@@ -48,7 +49,17 @@ class _ProductlistScreenState extends State<ProductlistScreen> {
             },
             icon: Icon(CupertinoIcons.cart),
           ),
-          IconButton(onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentScreen(),)), icon: Icon(Icons.credit_card))
+          IconButton(
+            onPressed: () => Navigator.of(
+              context,
+            ).push(MaterialPageRoute(builder: (context) => PaymentScreen())),
+            icon: Icon(Icons.credit_card),
+          ),
+          IconButton(onPressed: () {
+            setState(() {
+              view = !view;
+            });
+          }, icon: Icon(Icons.layers))
         ],
       ),
       // body: RefreshIndicator(
@@ -112,10 +123,20 @@ class _ProductlistScreenState extends State<ProductlistScreen> {
               return Center(child: CircularProgressIndicator());
             }
             if (state is ProductsListSucessState) {
-              return ListView.builder(
+              return GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: view? 1:2,
+                  crossAxisSpacing: 1,
+                  mainAxisSpacing: 12,
+                  childAspectRatio: view? 1.50 :0.70,
+                ),
+                physics: BouncingScrollPhysics(),
                 itemCount: state.productList.length,
                 itemBuilder: (context, index) {
-                  return ProductCard(product: state.productList[index]);
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: ProductCard(product: state.productList[index]),
+                  );
                 },
               );
             }
