@@ -39,6 +39,9 @@ class ProductCard extends StatelessWidget {
                     child: Icon(Icons.add_shopping_cart),
                   ),
                   onTap: () {
+                    product.isCard == 1? context.read<ProductsListBloc>().add(
+                      ProductRemoveCart(removeCartProduct: product),
+                    ):
                     context.read<ProductsListBloc>().add(
                       ProductAddCart(cartProduct: product),
                     );

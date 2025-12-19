@@ -18,13 +18,22 @@ class _PaymentScreenState extends State<PaymentScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Payment List"),),
-      body: ListView.builder(itemCount: paymentData.length,
+      appBar: AppBar(title: const Text("Payment List")),
+      body: paymentData.isEmpty
+          ? const Center(
+        child: Text(
+          "No payment data available",
+          style: TextStyle(fontSize: 16),
+        ),
+      )
+          : ListView.builder(
+        itemCount: paymentData.length,
         itemBuilder: (context, index) {
-        final OrderModel singleData = paymentData[index];
-        return OrderCardWidget(order: singleData,);
-
-      },)
+          final OrderModel singleData = paymentData[index];
+          return OrderCardWidget(order: singleData);
+        },
+      ),
     );
   }
+
 }

@@ -28,7 +28,7 @@ class _CartscreenState extends State<Cartscreen> {
             return Center(child: CircularProgressIndicator());
           }
           if (state is CartListSucessState) {
-            return GridView.builder(
+            return state.cartProduct.isNotEmpty?GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 1,
@@ -43,7 +43,11 @@ class _CartscreenState extends State<Cartscreen> {
                   child: AddcartWidget(cartProduct: singleProduct),
                 );
               },
-            );
+            ):const Center(
+                child: Text(
+                  "No Cart data available",
+                  style: TextStyle(fontSize: 16),
+                ));
           }
           return SizedBox.shrink();
         },

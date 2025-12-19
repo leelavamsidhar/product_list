@@ -80,9 +80,17 @@ class ProductsListBloc extends Bloc<ProductsListEvent, ProductsListState> {
     try {
       emit(loaingState());
       final removedProduct = event.removeCartProduct;
-      if(removedProduct.id == null){
+      if (removedProduct.id == null) {
         emit(RemoveCartError(errorMessage: "Please give the valid product "));
       }
+      for (var p1 in box.values) {
+        if (p1.id == removedProduct.id) {
+          p1.isCard = 0;
+          p1.save();
+          break;
+        }
+      }
+      emit(ProductsListSucessState(productList: box.values.toList()));
     } catch (e) {
       emit(RemoveCartError(errorMessage: e.toString()));
     }
